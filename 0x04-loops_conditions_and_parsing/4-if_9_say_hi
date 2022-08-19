@@ -11,6 +11,6 @@ do
     echo "Best School"
   fi
   echo "Hi"
-  (( count++ ))
   echo "Best School"
+  (( count++ ))
 done
