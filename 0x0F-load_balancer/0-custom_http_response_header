@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2154
-# configures a brand new Ubuntu machine
+# returns a custom header on request
 
-sudo apt-get -y update
-sudo apt-get -y upgrade
-sudo apt-get -y install nginx
-sudo sed -i "11i\\\tadd_header X-Served-By $HOSTNAME;" /etc/nginx/nginx.conf
-echo "Welcome ALX Loadbalancer" | sudo tee /usr/share/nginx/html/index.html
-sudo service nginx start
+apt-get -y update
+apt-get -y install nginx
+
+sed -i "11i\\\tadd_header X-Served-By $HOSTNAME;" /etc/nginx/nginx.conf
+echo "Hello World!" | tee /var/www/html/index.html
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+
+service nginx start
