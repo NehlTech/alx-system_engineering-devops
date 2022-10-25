@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
-# returns a custom header on request
+# Configures a Nginx server
+sudo hostnamectl set-hostname "$(sed -n '/127.0.0.1/p' /etc/hosts | cut -d' ' -f3)"
 
-apt-get -y update
-apt-get -y install nginx
+sudo apt-get update
+sudo apt-get -y install nginx
+echo "Alx Loadbalancer!" | sudo tee /usr/share/nginx/html/index.html
 
-sed -i "11i\\\tadd_header X-Served-By $HOSTNAME;" /etc/nginx/nginx.conf
-echo "Hello World!" | tee /var/www/html/index.html
-echo "Ceci n'est pas une page" > /var/www/html/404.html
+redirect="\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n\t}"
+sudo sed -i "/^\tlocation \// i\ $redirect" /etc/nginx/sites-available/default
 
-service nginx start
+echo "Ceci n'est pas une page" | sudo tee /usr/share/nginx/html/404.html
+
+sudo sed -i "/\t#error_page/s/#//g" /etc/nginx/sites-available/default
+
+sudo sed -i "/^server {/a\ \tadd_header X-Served-By $(hostname);" /etc/nginx/sites-enabled/default
+
+sudo service nginx restart
