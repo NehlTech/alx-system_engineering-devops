@@ -2,7 +2,7 @@
 # Installs Nginx with the following configurations:
 #+    Listens on port 80.
 #+    Returns a page containing "Hello World!" when queried
-# Nginx should be listening on port 80
+#     Nginx should be listening on port 80
 #++    at the root with a curl GET request.
 
 sudo apt-get update -y
